@@ -6,7 +6,7 @@ namespace OutPutTable {
 
     const string separatorColumn = "\t";
     const string separatorRow = "\n";
-    
+
 
     string replaceSpaces(const string &input) {
         std::string result = input;

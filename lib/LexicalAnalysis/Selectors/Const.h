@@ -6,7 +6,19 @@
 #include "FormableTable.h"
 
 namespace  LexicalAnalysis::Selectors {
-    class ConstSelector : public SelectorWithException, FormableTable <string> {
+
+    class Const{
+    private:
+        static int countInstance;
+        string content;
+        int hash;
+    public:
+        Const(string _content) : content(_content), hash(countInstance) { countInstance++; };
+
+        int getHash() { return hash; };
+    };
+
+    class ConstSelector : public SelectorWithException<Const>{
     private:
 
         regex getRegex() override;

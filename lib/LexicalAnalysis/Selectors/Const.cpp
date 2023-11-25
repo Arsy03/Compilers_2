@@ -12,5 +12,5 @@ regex LexicalAnalysis::Selectors::ConstSelector::getExceptionRegex() {
 }
 
 LexType LexicalAnalysis::Selectors::ConstSelector::getLexType() {
-    return Const;
+    return LexType::Const;
 }

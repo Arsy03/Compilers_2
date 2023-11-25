@@ -30,7 +30,7 @@ public:
         return rows[row];
     }
 
-    friend ostream &operator<<(ostream &os, const Table &obj);
+    friend ostream &operator<<(ostream &os, const Table<T> &obj);
 };
 
 

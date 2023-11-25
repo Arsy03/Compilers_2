@@ -8,14 +8,14 @@ set(HEADER_FILES
         Lexeme.h
         Selectors/SelectorWithException.h
         Selectors/FormableTable.h
-        Selectors/Commentator.h
+        Selectors/CommentSelector.h
         TypeLexeme.h)
 
 set(SOURCE_FILES
         LexicalAnalyzer.cpp
         Selectors/SelectorLexeme.cpp
         Selectors/SelectorWithException.cpp
-        Selectors/Commentator.cpp Selectors/Const.h Selectors/Const.cpp)
+        Selectors/CommentSelector.cpp Selectors/Const.h Selectors/Const.cpp)
 
 add_library(LexicalAnalysis_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
 
