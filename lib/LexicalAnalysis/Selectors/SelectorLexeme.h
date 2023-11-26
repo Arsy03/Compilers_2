@@ -9,6 +9,7 @@
 #include <iosfwd>
 #include "../Lexeme.h"
 #include "../TypeLexeme.h"
+#include "../TableElementLexeme.h"
 #include "FormableTable.h"
 
 namespace LexicalAnalysis::Selectors {
@@ -38,55 +39,32 @@ namespace LexicalAnalysis::Selectors {
             for (int i = 0; i < positionJumps.size(); i++)
                 if (positionJumps[i] > indexSourceProgram)
                     return i;
+            return -1;
         }
 
         int getColumnBy(int indexSourceProgram) {
             int lastJump = positionJumps[getRowsBy(indexSourceProgram) - 1];
-            return indexSourceProgram - lastJump;
+            return indexSourceProgram - lastJump + 1;
         }
     };
 
-    template<typename TLexeme>
-    class SelectorLexeme : public FormableTable<TLexeme> {
+    class SelectorLexeme : public FormableTable<TableElementLexeme> {
         CounterPosition counterPosition; //TODO передавть конструктором из лекс анализера
 
+        Table<TableElementLexeme> tableLexeme;
         vector<Lexeme> streamSelectedLexeme;
     protected:
         virtual regex getRegex() = 0;
 
         virtual LexType getLexType() = 0;
 
+        virtual TableElementLexeme getTableElement(string content) = 0;
+
     public:
-        typedef std::regex_iterator<const char *> Myiter;
-        virtual string select(string source){
-            counterPosition.countRows(source);//TODO пперенести его в лекс анализер
+        virtual string select(string source);
 
-            regex regexSelector = getRegex();
-
-            const char *pat = source.c_str();
-            Myiter::regex_type rx(regexSelector);
-            Myiter next(pat, pat + source.size(), rx);
-            Myiter end;
-
-            for (; next != end; ++next) {
-                int startIndex = next->position() + 1;
-                // TODO Сохранить значение в таблицу
-                streamSelectedLexeme.push_back( //TODO +индекс в таблице с типом LexType
-                        Lexeme(getLexType(),
-                               counterPosition.getRowsBy(startIndex),
-                               counterPosition.getColumnBy(startIndex)));
-
-                startIndex = next->position();
-                int endIndex = next->position() + next->str().size();
-                for(int i = startIndex; i < endIndex; ++i)
-                    source[i] = ' ';
-            }
-
-            return source;
-        };
-
-        virtual Table<TLexeme> getTable() {
-            return Table<TLexeme>();
+        virtual Table<TableElementLexeme> getTable() {
+            return tableLexeme;
         };
 
         auto begin() {
@@ -96,6 +74,28 @@ namespace LexicalAnalysis::Selectors {
         auto end() {
             return streamSelectedLexeme.end();
         }
+
+    private:
+        struct entry {
+        private:
+            int startPosition;
+            string content;
+        public:
+            entry(int _startPosition, string _content) : startPosition(_startPosition), content(_content) {};
+
+            int getStartPosition() { return startPosition; };
+
+            int getEndPosition() { return startPosition + content.size(); };
+
+            string getContent() { return content; };
+
+        };
+
+        vector<entry> findAllEntry(string source);
+
+        void buildTableStreamLexeme(const vector<entry> &entries);
+
+        string clearEntries(string source, const vector<entry> &entries);
     };
 
 

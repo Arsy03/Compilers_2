@@ -2,8 +2,11 @@
 #include <iostream>
 #include <fstream>
 #include "lib/LexicalAnalysis/Selectors/CommentSelector.h"
+#include "set"
 
 using namespace std;
+
+using namespace LexicalAnalysis::Selectors;
 
 int main()
 {
@@ -20,6 +23,10 @@ int main()
     for(auto l : commentator){
         cout << l << endl;
     }
+
+    auto table = commentator.getTable();
+    cout << table;
+
 
     cout << programAfter;
 
