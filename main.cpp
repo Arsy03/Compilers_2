@@ -3,6 +3,7 @@
 #include <fstream>
 #include "lib/LexicalAnalysis/Selectors/CommentSelector.h"
 #include "set"
+#include "lib/LexicalAnalysis/Selectors/Support/SelectorException.h"
 
 using namespace std;
 
@@ -18,8 +19,13 @@ int main()
 
     LexicalAnalysis::Selectors::CommentSelector commentator;
 
-    string programAfter = commentator.select(stream.str());
-
+    string programAfter;
+    try {
+        programAfter = commentator.select(stream.str());
+    }
+    catch (SelectorException e){
+        cout << e.what();
+    }
     for(auto l : commentator){
         cout << l << endl;
     }

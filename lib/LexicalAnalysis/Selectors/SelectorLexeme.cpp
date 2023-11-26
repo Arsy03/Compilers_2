@@ -5,28 +5,12 @@ namespace LexicalAnalysis::Selectors {
     string SelectorLexeme::select(string source) {
         counterPosition.countRows(source);//TODO пперенести его в лекс анализер
 
-        vector<entry> entries = findAllEntry(source);
+        vector<entry> entries = findAllEntry(source, getRegex());
         buildTableStreamLexeme(entries);
 
         source = clearEntries(source, entries);
 
         return source;
-    }
-
-    typedef std::regex_iterator<const char *> Myiter;
-    vector<SelectorLexeme::entry> SelectorLexeme::findAllEntry(string source) {
-        vector<entry> result;
-        regex regexSelector = getRegex();
-
-        const char *pat = source.c_str();
-        Myiter::regex_type rx(regexSelector);
-        Myiter next(pat, pat + source.size(), rx);
-        Myiter end;
-
-        for (; next != end; ++next)
-            result.push_back(entry(next->position(), next->str()));
-
-        return result;
     }
 
     void SelectorLexeme::buildTableStreamLexeme(const vector<entry> &entries) {

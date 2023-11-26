@@ -1,13 +1,11 @@
 
 #include "SelectorWithException.h"
+#include "Support/SelectorException.h."
 
-/*string LexicalAnalysis::Selectors::SelectorWithException::select(string sourceProgram) {
-    sourceProgram = SelectorLexeme::select(sourceProgram);
-    checkOnException(sourceProgram);
-}*/
 
 void LexicalAnalysis::Selectors::SelectorWithException::checkOnException(string sourceProgram) {
+     vector<entry> exceptions = findAllEntry(sourceProgram, getExceptionRegex());
 
-
-
+     if(!exceptions.empty())
+         throw SelectorException(getLexType(), exceptions, counterPosition);
 }
