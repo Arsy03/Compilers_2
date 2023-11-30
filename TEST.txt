@@ -1,7 +1,27 @@
-dfhgjkdhfjkg /* djfhgjdf */
-hdf 45
-jkdfgkj /**/fasle //pirodas
-jdfhg /* dfg
-dfg sdfg
-dfgsre */
-djfhhgj 56
+main() { //comment)))))
+    integer x;
+    string z;
+    z = "www";
+    bool y;
+    y = true;
+    z = "adsfasdf";
+    
+    if (x == 5) then
+        while x > 2;
+            x = x - 1;
+            z = x + z + convert_s(y);
+        endwhile;
+    else
+        z = convert_s(y);
+    endif;
+}
+//&bfeu
+string proc convert_s(bool t) {
+    string result;
+    if (y == true) then
+        result = "true";
+    else
+        result = "false";
+    endif;
+    return result;
+}

@@ -11,7 +11,7 @@ using namespace OutputTable;
 template<typename T>
 class Table {
     vector<string> header;
-    set<T> rows;
+    vector<T> rows;
 
 public:
     Table(){
@@ -31,17 +31,21 @@ public:
     }
 
     void append(const T& obj){
-        rows.insert(obj);
+        rows.push_back(obj);
     }
 
     int getNumRows(const T& obj) const{
-        auto it = rows.find(obj);
+        auto it = std::find(rows.begin(), rows.end(), obj);
         if (it != rows.end()) {
             size_t position = std::distance(rows.begin(), it);
             return position + 1;
         }
 
         return -1;
+    }
+
+    bool contains(const T& obj){
+        return getNumRows(obj) != -1;
     }
 
     /*T &operator[](int row) const {

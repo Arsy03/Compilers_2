@@ -15,6 +15,6 @@ LexType LexicalAnalysis::Selectors::CommentSelector::getLexType() {
     return LexType::Comment;
 }
 
-TableElementLexeme LexicalAnalysis::Selectors::CommentSelector::getTableElement(string content) {
-    return UniqueTableElementLexeme(content);
+bool LexicalAnalysis::Selectors::CommentSelector::isUnickLexeme() {
+    return true;
 }

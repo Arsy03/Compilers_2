@@ -15,7 +15,7 @@ namespace LexicalAnalysis::Selectors {
 
         LexType getLexType() override;
 
-        TableElementLexeme getTableElement(string content) override;
+        bool isUnickLexeme() override;
     };
 }
 #endif //COMPILER_COMMENTATOR_H

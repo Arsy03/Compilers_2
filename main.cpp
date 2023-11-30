@@ -1,44 +1,57 @@
 #include <regex>
 #include <iostream>
 #include <fstream>
-#include "lib/LexicalAnalysis/Selectors/CommentSelector.h"
+
 #include "set"
-#include "lib/LexicalAnalysis/Selectors/Support/SelectorException.h"
+#include "lib/LexicalAnalysis/LexicalAnalyzer.h"
 
 using namespace std;
 
-using namespace LexicalAnalysis::Selectors;
+using namespace LexicalAnalysis;
 
-int main()
-{
-    ifstream in;
-    in.open("C:\\Users\\glebl\\CLionProjects\\Babushka_2 (1)\\Babushka_2\\TEST.txt");
+int main() {
+    LexicalAnalyzer lexAnalizer("C:\\Users\\glebl\\CLionProjects\\Compilers_22\\TEST.txt");
 
-    stringstream stream;
-    stream << in.rdbuf();
+    lexAnalizer.analize();
+    lexAnalizer.print();
 
-    LexicalAnalysis::Selectors::CommentSelector commentator;
-
-    string programAfter;
-    try {
-        programAfter = commentator.select(stream.str());
-    }
-    catch (SelectorException e){
-        cout << e.what();
-    }
-    for(auto l : commentator){
-        cout << l << endl;
-    }
-
-    auto table = commentator.getTable();
-    cout << table;
+    system("pause");
 
 
-    cout << programAfter;
+    /* ifstream in;
+     in.open();
+     std::cout << "\033[31mКрасные буквы\033[0m" << std::endl;
+     stringstream stream;
+     stream << in.rdbuf();
+     int f;
+     cin >> f;
+     LexicalAnalysis::Selectors::IdentificatorSelector keywSelector;
 
-    return  0 ;
-    std::string text =  "+++++ \" jkgrn ik\"erjbng er"s;
-    text =  "+++++ \" jkgrn ik\"erjbng er"s;
+     CounterPosition counterPosition;
+     counterPosition.countRows(stream.str());
+
+     keywSelector.setCounterPosition(counterPosition);
+
+     string programAfter;
+     try {
+         programAfter = keywSelector.select(stream.str());
+     }
+     catch (SelectorException e){
+         cout << e.what();
+     }
+     for(auto l : keywSelector){
+         cout << l << endl;
+     }
+
+     auto table = keywSelector.getTable();
+     cout << table;
+
+
+     cout << programAfter;
+
+     return  0 ;*/
+    std::string text = "+++++ \" jkgrn ik\"erjbng er"s;
+    text = "+++++ \" jkgrn ik\"erjbng er"s;
     //std::regex er(R"((\")([^"]+)(\"))");
     smatch m;
 

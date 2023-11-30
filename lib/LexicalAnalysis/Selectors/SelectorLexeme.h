@@ -18,25 +18,29 @@ namespace LexicalAnalysis::Selectors {
 
     using namespace std;
 
-    class SelectorLexeme : public FormableTable<TableElementLexeme> {
+    class SelectorLexeme : public FormableTable<string> {
     protected:
         CounterPosition counterPosition; //TODO передавть конструктором из лекс анализера
 
-        Table<TableElementLexeme> tableLexeme;
+        Table<string> tableLexeme;
         vector<Lexeme> streamSelectedLexeme;
     protected:
         virtual regex getRegex() = 0;
 
-        virtual LexType getLexType() = 0;
-
-        virtual TableElementLexeme getTableElement(string content) = 0;
+        virtual bool isUnickLexeme() = 0;
 
     public:
+        virtual LexType getLexType() = 0;
+
         virtual string select(string source);
 
-        virtual Table<TableElementLexeme> getTable() {
+        virtual Table<string> getTable() {
             return tableLexeme;
         };
+
+        void setCounterPosition(CounterPosition _counterPosition) {
+            counterPosition = _counterPosition;
+        }
 
         auto begin() {
             return streamSelectedLexeme.begin();
@@ -45,6 +49,7 @@ namespace LexicalAnalysis::Selectors {
         auto end() {
             return streamSelectedLexeme.end();
         }
+
 
     private:
         void buildTableStreamLexeme(const vector<entry> &entries);

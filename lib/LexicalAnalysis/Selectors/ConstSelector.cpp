@@ -15,6 +15,6 @@ LexType LexicalAnalysis::Selectors::ConstSelector::getLexType() {
     return LexType::Const;
 }
 
-TableElementLexeme LexicalAnalysis::Selectors::ConstSelector::getTableElement(string content) {
-    return UniqueTableElementLexeme(content);
+bool LexicalAnalysis::Selectors::ConstSelector::isUnickLexeme() {
+    return true;
 }

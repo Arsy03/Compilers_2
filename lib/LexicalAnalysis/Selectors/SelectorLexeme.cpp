@@ -3,7 +3,7 @@
 namespace LexicalAnalysis::Selectors {
 
     string SelectorLexeme::select(string source) {
-        counterPosition.countRows(source);//TODO пперенести его в лекс анализер
+       // counterPosition.countRows(source);//TODO пперенести его в лекс анализер
 
         vector<entry> entries = findAllEntry(source, getRegex());
         buildTableStreamLexeme(entries);
@@ -14,10 +14,11 @@ namespace LexicalAnalysis::Selectors {
     }
 
     void SelectorLexeme::buildTableStreamLexeme(const vector<entry> &entries) {
-        for (auto entry: entries){
-            auto tableElement = getTableElement(entry.getContent());
+        for (auto entry: entries) {
+            auto tableElement = entry.getContent();
 
-            tableLexeme.append(tableElement);
+            if (isUnickLexeme() || !tableLexeme.contains(tableElement))
+                tableLexeme.append(tableElement);
 
             LexType typeLexeme = getLexType();
             int numRowTable = tableLexeme.getNumRows(tableElement);
@@ -28,9 +29,9 @@ namespace LexicalAnalysis::Selectors {
         }
     }
 
-    string SelectorLexeme::clearEntries(string source, const vector<entry> &entries){
-        for (auto entry: entries){
-            for(int i = entry.getStartPosition(); i < entry.getEndPosition(); ++i)
+    string SelectorLexeme::clearEntries(string source, const vector<entry> &entries) {
+        for (auto entry: entries) {
+            for (int i = entry.getStartPosition(); i < entry.getEndPosition(); ++i)
                 source[i] = ' ';
         }
         return source;
