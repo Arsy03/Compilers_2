@@ -2,7 +2,7 @@
 #ifndef COMPILER_FORMABLETABLE_H
 #define COMPILER_FORMABLETABLE_H
 
-#include "../../GeneralType/Table/Table.h"
+#include "../../GeneralType/Table.h"
 
 template<typename T>
 class FormableTable{
