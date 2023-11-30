@@ -1,17 +1,46 @@
-// std__regex__regex_iterator.cpp
-// compile with: /EHsc
 #include <regex>
 #include <iostream>
+#include <fstream>
+#include "lib/LexicalAnalysis/Selectors/CommentSelector.h"
+#include "set"
+#include "lib/LexicalAnalysis/Selectors/Support/SelectorException.h"
 
-typedef std::regex_iterator<const char *> Myiter;
+using namespace std;
+
+using namespace LexicalAnalysis::Selectors;
+
 int main()
 {
-    std::string pat = "123 djmrol 456";
-    const char* pat0 = pat.c_str();
-    Myiter::regex_type rx("\\d+");
-    Myiter next(pat0, pat0 + pat.size(), rx);
-    Myiter end;
+    ifstream in;
+    in.open("C:\\Users\\glebl\\CLionProjects\\Babushka_2 (1)\\Babushka_2\\TEST.txt");
 
-    for (; next != end; ++next)
-        std::cout << "match == " << next->str() << std::endl;
+    stringstream stream;
+    stream << in.rdbuf();
+
+    LexicalAnalysis::Selectors::CommentSelector commentator;
+
+    string programAfter;
+    try {
+        programAfter = commentator.select(stream.str());
+    }
+    catch (SelectorException e){
+        cout << e.what();
+    }
+    for(auto l : commentator){
+        cout << l << endl;
+    }
+
+    auto table = commentator.getTable();
+    cout << table;
+
+
+    cout << programAfter;
+
+    return  0 ;
+    std::string text =  "+++++ \" jkgrn ik\"erjbng er"s;
+    text =  "+++++ \" jkgrn ik\"erjbng er"s;
+    //std::regex er(R"((\")([^"]+)(\"))");
+    smatch m;
+
+
 }
